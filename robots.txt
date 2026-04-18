@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /yonetim.php
+Disallow: /api/
+Disallow: /uploads/logos/
+
+Sitemap: https://entegrator.codega.com.tr/sitemap.xml
