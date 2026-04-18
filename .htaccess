@@ -1,0 +1,46 @@
+# Entegratör Rehberi — URL rewrite + güvenlik
+Options -Indexes
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+
+  # SEO friendly URL'ler
+  RewriteRule ^e/([a-z0-9-]+)/?$ e.php?s=$1 [L,QSA]
+  RewriteRule ^hizmet/([a-z0-9-]+)/?$ hizmet.php?h=$1 [L,QSA]
+  RewriteRule ^erp/([a-z0-9-]+)/?$ erp.php?e=$1 [L,QSA]
+  RewriteRule ^karsilastir/?$ karsilastir.php [L,QSA]
+  RewriteRule ^sitemap\.xml$ sitemap.xml.php [L]
+
+  # config.php ve uploads klasörüne direkt PHP erişim engeli
+  RewriteRule ^(config\.php|init\.php)$ - [F,L]
+</IfModule>
+
+# PHP execution engelle (uploads)
+<Directory "uploads">
+  php_flag engine off
+  <FilesMatch "\.(php|phtml|phps|pht|php3|php4|php5|php7|php8)$">
+    Require all denied
+  </FilesMatch>
+</Directory>
+
+# Güvenlik header'ları
+<IfModule mod_headers.c>
+  Header set X-Content-Type-Options "nosniff"
+  Header set X-Frame-Options "SAMEORIGIN"
+  Header set Referrer-Policy "strict-origin-when-cross-origin"
+  Header set Permissions-Policy "geolocation=(), microphone=()"
+</IfModule>
+
+# Gzip
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/css text/javascript application/javascript application/json
+</IfModule>
+
+# Cache
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType image/jpeg "access plus 1 month"
+  ExpiresByType image/png "access plus 1 month"
+  ExpiresByType image/svg+xml "access plus 1 month"
+  ExpiresByType text/css "access plus 7 days"
+  ExpiresByType application/javascript "access plus 7 days"
+</IfModule>
