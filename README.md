@@ -26,14 +26,31 @@ https://entegrator.codega.com.tr
 
 ## Kurulum
 
+### Seçenek A: Otomatik (önerilen)
 1. Repo'yu `/public_html/entegrator.codega.com.tr/` altına aç
 2. `config.php` düzenle: DB bilgileri, `CSRF_SECRET`, `ADMIN_DEFAULT_PASS`
-3. İlk sayfa açılışında:
-   - 7 tablo otomatik oluşur (`entegratorler`, `hizmet_turleri`, `entegrator_hizmetler`, `erp_uyumluluk`, `entegrator_erp`, `admin_kullanicilar`, `ziyaretci_log`)
+3. İlk sayfa açılışında otomatik olarak:
+   - 8 tablo oluşur (`entegratorler`, `hizmet_turleri`, `entegrator_hizmetler`, `erp_uyumluluk`, `entegrator_erp`, `admin_kullanicilar`, `ziyaretci_log`, `iletisim_mesajlari`)
    - 11 hizmet türü + 9 ERP seed edilir
    - İlk admin oluşur: `admin` / `admin123` (ilk girişte şifre değiştirme zorunlu)
-   - 89 GİB entegratörü `seed/gib_entegratorler.tsv` dosyasından otomatik yüklenir
+   - 89 GİB entegratörü `seed/gib_entegratorler.tsv` dosyasından yüklenir
 4. `/yonetim.php` → şifreni değiştir → entegratörleri zenginleştirmeye başla
+
+### Seçenek B: Manuel SQL import
+phpMyAdmin veya CLI kullanıyorsan `install.sql` ile tek seferde kur:
+```bash
+mysql -u USER -p DBNAME < install.sql
+```
+veya phpMyAdmin → Veritabanı seç → **Import** sekmesi → `install.sql` yükle.
+
+Dosya içeriği:
+- 8 tablo (DROP + CREATE)
+- 11 hizmet türü seed
+- 9 ERP uyumluluğu seed
+- 1 admin (admin / admin123)
+- **89 GİB onaylı entegratör seed**
+
+Yedek alma için de aynı dosya yapı referansı olarak kullanılabilir.
 
 ## Mimari
 
